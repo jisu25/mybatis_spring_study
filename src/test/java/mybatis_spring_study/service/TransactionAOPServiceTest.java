@@ -18,12 +18,12 @@ import mybatis_spring_study.dto.Employee;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/context-root.xml"})
-public class TransactionServiceTest {
+public class TransactionAOPServiceTest {
 
-	protected static final Log log= LogFactory.getLog(TransactionServiceTest.class);
+	protected static final Log log= LogFactory.getLog(TransactionAOPServiceTest.class);
 	
 	@Autowired
-	private TransactionService service;
+	private TransactionAOPService service;
 	
 	@After
 	public void tearDown() throws Exception {
@@ -31,30 +31,30 @@ public class TransactionServiceTest {
 	}
 	
 	@Test(expected = DuplicateKeyException.class)
-	public void testARegisterTransaction_Dept_fail() {
+	public void testATrRegister_Dept_fail() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Department department = new Department(1, "테스크포스", 10); // 겹침 -> rollback
-		Employee employee = new Employee(1004, "박신혜", "과장", new Employee(4377), 410000, department); // 성공이지만 위에서 롤백
+		Department department = new Department(1, "인사", 10); // 겹침 -> rollback
+		Employee employee = new Employee(1006, "박규영", "과장", new Employee(4377), 410000, department); // 성공이지만 위에서 롤백
 	
-		service.registerTransaction(department, employee);
+		service.trRegister(department, employee);
 	}
 	
 	@Test(expected = DuplicateKeyException.class)
-	public void testBRegisterTransaction_Emp_fail() {
+	public void testBTrRegister_Emp_fail() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Department department = new Department(6, "테스크포스", 10); // 성공
-		Employee employee = new Employee(4377, "박신혜", "과장", new Employee(4377), 410000, department); // 겹침 -> rollback
+		Department department = new Department(7, "인사", 10); // 성공
+		Employee employee = new Employee(4377, "박규영", "과장", new Employee(4377), 410000, department); // 겹침 -> rollback
 	
-		service.registerTransaction(department, employee);
+		service.trRegister(department, employee);
 	}
 	
 	@Test
-	public void testCRegisterTransaction_Success() {
+	public void testCTrRegister_Success() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Department department = new Department(6, "테스크포스", 10);
-		Employee employee = new Employee(1005, "박신혜", "과장", new Employee(4377), 410000, department);
+		Department department = new Department(7, "인사", 10);
+		Employee employee = new Employee(1006, "박규영", "과장", new Employee(4377), 410000, department);
 		
-		service.registerTransaction(department, employee);
+		service.trRegister(department, employee);
 	}
 
 	
@@ -63,28 +63,28 @@ public class TransactionServiceTest {
 	public void testDUnRegisterTransaction_Fail_Department() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		Department department = new Department(100); // RuntimeException -> rollback
-		Employee employee = new Employee(1005); // rollback되므로 삭제되면 안 됨
+		Employee employee = new Employee(1006); // rollback되므로 삭제되면 안 됨
 		
-		service.unRegisterTransaction(department, employee);
+		service.trUnRegister(department, employee);
 	}
 	
 	
 	@Test(expected = RuntimeException.class)
 	public void testEUnRegisterTransaction_Fail_Emp() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Department department = new Department(6); // 성공
+		Department department = new Department(7); // 성공
 		Employee employee = new Employee(9999); // rollback
 		
-		service.unRegisterTransaction(department, employee);
+		service.trUnRegister(department, employee);
 	}
 	
 	@Test
 	public void testFUnRegisterTransaction_Success() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Department department = new Department(6); // 성공
-		Employee employee = new Employee(1005); // 성공
+		Department department = new Department(7); // 성공
+		Employee employee = new Employee(1006); // 성공
 		
-		service.unRegisterTransaction(department, employee); // 커밋
+		service.trUnRegister(department, employee); // 커밋
 	}
 
 }
