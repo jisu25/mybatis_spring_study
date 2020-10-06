@@ -21,7 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
 	
 	@Override
 	@Transactional
-	public void registerTransaction(Department department, Employee employee) {
+	public void trRegisterTransaction(Department department, Employee employee) {
 		// 부서를 등록하고 해당 부서에 사원을 추가
 		int res = deptMapper.insertDepartment(department);
 		res += empMapper.insertEmployee(employee);
@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	@Transactional
-	public void unRegisterTransaction(Department department, Employee employee) {
+	public void trUnRegisterTransaction(Department department, Employee employee) {
 		int res = empMapper.deleteEmployee(employee);
 		res += deptMapper.deleteDepartment(department);
 		if (res != 2) throw new RuntimeException();

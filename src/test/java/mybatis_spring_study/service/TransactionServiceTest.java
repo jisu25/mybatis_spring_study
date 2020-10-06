@@ -36,7 +36,7 @@ public class TransactionServiceTest {
 		Department department = new Department(1, "테스크포스", 10); // 겹침 -> rollback
 		Employee employee = new Employee(1004, "박신혜", "과장", new Employee(4377), 410000, department); // 성공이지만 위에서 롤백
 	
-		service.registerTransaction(department, employee);
+		service.trRegisterTransaction(department, employee);
 	}
 	
 	@Test(expected = DuplicateKeyException.class)
@@ -45,7 +45,7 @@ public class TransactionServiceTest {
 		Department department = new Department(6, "테스크포스", 10); // 성공
 		Employee employee = new Employee(4377, "박신혜", "과장", new Employee(4377), 410000, department); // 겹침 -> rollback
 	
-		service.registerTransaction(department, employee);
+		service.trRegisterTransaction(department, employee);
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class TransactionServiceTest {
 		Department department = new Department(6, "테스크포스", 10);
 		Employee employee = new Employee(1005, "박신혜", "과장", new Employee(4377), 410000, department);
 		
-		service.registerTransaction(department, employee);
+		service.trRegisterTransaction(department, employee);
 	}
 
 	
@@ -65,7 +65,7 @@ public class TransactionServiceTest {
 		Department department = new Department(100); // RuntimeException -> rollback
 		Employee employee = new Employee(1005); // rollback되므로 삭제되면 안 됨
 		
-		service.unRegisterTransaction(department, employee);
+		service.trUnRegisterTransaction(department, employee);
 	}
 	
 	
@@ -75,7 +75,7 @@ public class TransactionServiceTest {
 		Department department = new Department(6); // 성공
 		Employee employee = new Employee(9999); // rollback
 		
-		service.unRegisterTransaction(department, employee);
+		service.trUnRegisterTransaction(department, employee);
 	}
 	
 	@Test
@@ -84,7 +84,7 @@ public class TransactionServiceTest {
 		Department department = new Department(6); // 성공
 		Employee employee = new Employee(1005); // 성공
 		
-		service.unRegisterTransaction(department, employee); // 커밋
+		service.trUnRegisterTransaction(department, employee); // 커밋
 	}
 
 }
