@@ -12,12 +12,13 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import mybatis_spring_study.ContextRoot;
 import mybatis_spring_study.dto.Department;
 import mybatis_spring_study.dto.Employee;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/context-root.xml"})
+@ContextConfiguration(classes = {ContextRoot.class})
 public class TransactionServiceTest {
 
 	protected static final Log log= LogFactory.getLog(TransactionServiceTest.class);

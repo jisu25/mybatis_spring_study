@@ -1,7 +1,5 @@
 package mybatis_spring_study.mapper;
 
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.apache.ibatis.logging.Log;
@@ -16,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import mybatis_spring_study.ContextRoot;
 import mybatis_spring_study.dto.Department;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/context-root.xml"})
+@ContextConfiguration(classes = {ContextRoot.class})
 public class DepartmentMapperTest {
 
 	protected static final Log log= LogFactory.getLog(DepartmentMapperTest.class);

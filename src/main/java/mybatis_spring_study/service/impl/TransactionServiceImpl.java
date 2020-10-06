@@ -25,6 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
 		// 부서를 등록하고 해당 부서에 사원을 추가
 		int res = deptMapper.insertDepartment(department);
 		res += empMapper.insertEmployee(employee);
+		if (res != 2) throw new RuntimeException();
 
 	}
 

@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/context-root.xml"})
+@ContextConfiguration(classes = {ContextRoot.class})
 public class DataSourceTest {
    
    protected static final Log log= LogFactory.getLog(DataSourceTest.class);
