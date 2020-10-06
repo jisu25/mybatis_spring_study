@@ -1,7 +1,5 @@
 package mybatis_spring_study.mapper;
 
-import static org.junit.Assert.fail;
-
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.junit.After;
