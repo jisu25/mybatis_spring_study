@@ -20,7 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
 	private EmployeeMapper empMapper;
 	
 	@Override
-	@Transactional
+//	@Transactional
 	public void trRegisterTransaction(Department department, Employee employee) {
 		// 부서를 등록하고 해당 부서에 사원을 추가
 		int res = deptMapper.insertDepartment(department);
@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	@Transactional
+//	@Transactional(rollbackFor = SQLException.class)
 	public void trUnRegisterTransaction(Department department, Employee employee) {
 		int res = empMapper.deleteEmployee(employee);
 		res += deptMapper.deleteDepartment(department);
